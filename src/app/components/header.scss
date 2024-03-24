@@ -1,0 +1,60 @@
+.header-wrap {
+  padding: 10px 0;
+  .pre-header-wrap {
+    padding: 0 20px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-end;
+    span {
+      padding: 5px;
+      a {
+        font-size: 14px;
+        text-decoration: none;
+        color: #333333;
+        font-weight: 500;
+      }
+    }
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    .nav-bar {
+      span {
+        min-width: 100px;
+        margin: 0 20px;
+        a {
+          text-decoration: none;
+          color: black;
+          font-weight: 600;
+        }
+      }
+    }
+    .logo-wrap {
+      display: flex;
+      button {
+        width: 50px;
+        background-color: transparent;
+        border: 1px solid transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .post-header-wrap {
+    background-color: #f4f4f4;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    button {
+      margin: 0 20px;
+    }
+  }
+}

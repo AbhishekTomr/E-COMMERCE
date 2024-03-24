@@ -1,0 +1,38 @@
+.page-btn {
+  a {
+    border: 0px solid transparent;
+    color: #cccccc;
+  }
+}
+.active-page {
+  a {
+    color: black;
+  }
+  &:active,
+  &:focus,
+  &:hover {
+    background-color: transparent;
+    border-color: transparent;
+  }
+}
+
+.pagination {
+  a {
+    &:hover,
+    &:focus,
+    &:active {
+      background: transparent !important;
+      color: black !important;
+      border: 0px solid transparent;
+      font-weight: bold;
+    }
+  }
+  li.active {
+    span {
+      background: transparent !important;
+      color: black;
+      border: 0px solid transparent;
+      font-weight: bold;
+    }
+  }
+}
