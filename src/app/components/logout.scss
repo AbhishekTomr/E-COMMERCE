@@ -1,0 +1,21 @@
+.logout-wrapper {
+  position: relative;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  .theme-btn {
+    background-color: black;
+    border: 2px solid black;
+    margin: 1rem auto;
+    position: absolute;
+    right: 1rem;
+    width: 150px;
+    &:active,
+    &:focus,
+    &:hover {
+      background-color: white;
+      color: black;
+      border-color: black;
+    }
+  }
+}

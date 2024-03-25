@@ -22,13 +22,22 @@ export async function POST(request: NextRequest, response: NextResponse) {
     const validPassword = await bcryptjs.compare(password, user.password);
     console.log("valid password", validPassword);
     if (validPassword) {
-      const tokenData = { id: user._id, username: user.name, emai: user.emai };
+      const tokenData = {
+        id: user._id,
+        username: user.name,
+        email: user.email,
+      };
       const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {
         expiresIn: "1d",
       });
       const response = NextResponse.json({
         success: true,
         message: "Login Successful",
+        user: {
+          username: user.name,
+          email: user.email,
+          categories: user.selectedCategories,
+        },
       });
       response.cookies.set("token", token, { httpOnly: true });
       return response;

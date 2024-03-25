@@ -6,6 +6,7 @@ import searchIcon from "../../../public/assets/search.svg";
 import shopIcon from "../../../public/assets/shop.svg";
 
 import "./header.scss";
+import Logout from "./logout";
 
 type Props = {};
 

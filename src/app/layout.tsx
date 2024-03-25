@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Header from "./components/header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Toaster } from "react-hot-toast";
+import { UserContextProvider } from "./context/userContext";
 
 import "./globals.css";
 
@@ -23,7 +24,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Header />
         <Toaster position="top-center" />
-        {children}
+        <UserContextProvider>{children}</UserContextProvider>
       </body>
     </html>
   );

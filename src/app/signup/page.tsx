@@ -18,7 +18,6 @@ import _ from "lodash";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { request } from "http";
 
 interface IUser {
   username: string;
@@ -73,6 +72,7 @@ const Signup = () => {
       setIsLoading(false);
     }
   };
+
   return (
     <Card className="sign-up-wrap">
       <h2 className="signUp-header">Create your account</h2>
