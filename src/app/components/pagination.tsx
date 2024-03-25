@@ -5,10 +5,12 @@ import "./pagination.scss";
 import { useEffect, useState } from "react";
 import _ from "lodash";
 
-interface ListPaginationProps {}
+interface ListPaginationProps {
+  activePage: number;
+  setActivePage: any;
+}
 
-const ListPagination = (props: ListPaginationProps) => {
-  const [activePage, setActivePage] = useState(4);
+const ListPagination = ({ activePage, setActivePage }: ListPaginationProps) => {
   const [pageList, setPageList] = useState([1, 2, 3, 4, 5, 6, 7]);
   useEffect(() => {
     let newList = [...pageList];
