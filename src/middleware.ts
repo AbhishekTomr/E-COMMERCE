@@ -11,7 +11,7 @@ export function middleware(request: NextRequest) {
   if (path === "/") {
     return _.isEmpty(token)
       ? NextResponse.redirect(new URL("/login", request.nextUrl))
-      : NextResponse.redirect(new URL("/login", request.nextUrl));
+      : NextResponse.redirect(new URL("/categories", request.nextUrl));
   }
   if (!_.isEmpty(token) && isPublic) {
     return NextResponse.redirect(new URL("/categories", request.nextUrl));
@@ -23,5 +23,5 @@ export function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/", "/categories", "/login", "/signup", "/verify"],
+  matcher: ["/", "/categories", "/login", "/signup"],
 };

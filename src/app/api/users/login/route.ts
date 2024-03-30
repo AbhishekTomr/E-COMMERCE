@@ -19,6 +19,11 @@ export async function POST(request: NextRequest, response: NextResponse) {
         { status: 400 }
       );
     }
+    if (!user.verified)
+      return NextResponse.json(
+        { error: "User not verified yet!!!" },
+        { status: 400 }
+      );
     const validPassword = await bcryptjs.compare(password, user.password);
     console.log("valid password", validPassword);
     if (validPassword) {

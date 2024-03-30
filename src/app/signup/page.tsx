@@ -64,7 +64,7 @@ const Signup = () => {
         throw new Error("something went wrong");
       }
       toast.success("sign up successfully");
-      router.push("/login");
+      router.push("/verify");
     } catch (err: any) {
       const errorText = JSON.parse(err.request.responseText).error;
       toast.error(errorText || "Something went wrong");

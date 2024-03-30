@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
   verified: Boolean,
   verifyToken: String,
   varifyTokenExpiry: Date,
+  verificationTokenString: String,
   selectedCategories: {
     type: Array,
     default: [],

@@ -8,9 +8,11 @@ import toast from "react-hot-toast";
 import { useRouter, useSearchParams } from "next/navigation";
 import _ from "lodash";
 
-type Props = {};
+type Props = {
+  params: { token: string };
+};
 
-function VerifyPage({}: Props) {
+function VerifyPage({ params }: Props) {
   const [email, setEmail] = useState<string>("");
   const [verificationCode, setVerificationCode] = useState<string[]>([
     "",
@@ -24,9 +26,11 @@ function VerifyPage({}: Props) {
   ]);
   const [disableVerifyBtn, setDisableVerifyBtn] = useState<boolean>(true);
   const router = useRouter();
+  console.log("token****", params.token);
   const getUserInfo = async () => {
     try {
       const response = await axios.get("/api/verify/user");
+      console.log("response*****", response);
       const email = response.data.user.email;
       setEmail(email);
     } catch (err) {
