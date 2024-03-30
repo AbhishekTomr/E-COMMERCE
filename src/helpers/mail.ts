@@ -7,7 +7,7 @@ export const sendMail = async (email: string, verificationCode: any) => {
       sendGridTransport({
         auth: {
           api_key:
-            "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",
+          process.env.SENDGRID_API_KEY!,
         },
       })
     );
