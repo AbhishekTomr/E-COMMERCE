@@ -18,6 +18,7 @@ import _ from "lodash";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import validator from "validator";
 
 interface IUser {
   username: string;
@@ -35,12 +36,47 @@ const Signup = () => {
   });
   const [disableSignUp, setDisableSignUp] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<IUser>({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const validateForm = () => {
+    let validForm = true;
+    const { username, email, password } = user;
+    if (!validator.trim(username)) {
+      setError((oldState) => ({
+        ...oldState,
+        email: "name must not be empty",
+      }));
+      validForm = false;
+    }
+    if (!validator.isEmail(email) || !validator.trim(email).length) {
+      setError((oldState) => ({
+        ...oldState,
+        email: "please enter a valid email",
+      }));
+      validForm = false;
+    }
+    if (validator.trim(password).length < 6) {
+      setError((oldState) => ({
+        ...oldState,
+        password: "enter a password with min 6  characters",
+      }));
+      validForm = false;
+    }
+    return validForm;
+  };
 
   const router = useRouter();
 
   const onDataChange = (key: UserProps, data: string) => {
     const updatedUser = { ...user };
+    const updatedError = { ...error };
+    updatedError[key] = "";
     updatedUser[key] = data;
+    setError(updatedError);
     setUser(updatedUser);
   };
 
@@ -57,6 +93,8 @@ const Signup = () => {
 
   const userSignUp = async (event: any) => {
     event.stopPropagation();
+    const validForm = validateForm();
+    if (!validForm) return;
     try {
       setIsLoading(true);
       const response = await axios.post("/api/users/signup", user);
@@ -88,7 +126,11 @@ const Signup = () => {
             onChange={(event: any) => {
               onDataChange("username", event.target.value);
             }}
+            isInvalid={!_.isEmpty(error.username)}
           />
+          {!_.isEmpty(error.username) && (
+            <span className="error">{error.username}</span>
+          )}
         </div>
         <div className="form-control-wrap">
           <Form.Label htmlFor="email">Email</Form.Label>
@@ -101,7 +143,11 @@ const Signup = () => {
             onChange={(event: any) => {
               onDataChange("email", event.target.value);
             }}
+            isInvalid={!_.isEmpty(error.email)}
           />
+          {!_.isEmpty(error.email) && (
+            <span className="error">{error.email}</span>
+          )}
         </div>
         <div className="form-control-wrap">
           <Form.Label htmlFor="password">Password</Form.Label>
@@ -114,7 +160,11 @@ const Signup = () => {
             onChange={(event: any) => {
               onDataChange("password", event.target.value);
             }}
+            isInvalid={!_.isEmpty(error.password)}
           />
+          {!_.isEmpty(error.password) && (
+            <span className="error">{error.password}</span>
+          )}
         </div>
         <Button
           className={`theme-btn submit-btn ${disableSignUp ? "disabled" : ""}`}
