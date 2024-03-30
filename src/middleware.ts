@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const hasToken = (token:any) => token && Object.keys(token).length;
+const isEmpty = (token:any) => !(token&&true);
 
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
@@ -11,18 +11,18 @@ export function middleware(request: NextRequest) {
     : "";
   const vtoken = request.cookies.get("vtoken");
   if (path === "/verify") {
-    if (!hasToken(vtoken))
+    if (isEmpty(vtoken))
       return NextResponse.redirect(new URL("/login", request.nextUrl));
   }
   if (path === "/") {
-    return !hasToken(token)
+    return isEmpty(token)
       ? NextResponse.redirect(new URL("/login", request.nextUrl))
       : NextResponse.redirect(new URL("/categories", request.nextUrl));
   }
-  if (hasToken(token) && isPublic) {
+  if (!isEmpty(token) && isPublic) {
     return NextResponse.redirect(new URL("/categories", request.nextUrl));
   }
-  if (!hasToken(token) && !isPublic && path !== "/verify") {
+  if (isEmpty(token) && !isPublic && path !== "/verify") {
     return NextResponse.redirect(new URL("/login", request.nextUrl));
   }
 }
