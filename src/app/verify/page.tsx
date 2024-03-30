@@ -7,11 +7,13 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter, useSearchParams } from "next/navigation";
 import _ from "lodash";
+import { useRef } from "react";
 
 type Props = {};
 
 function VerifyPage({}: Props) {
   const [email, setEmail] = useState<string>("");
+  const formRef = useRef<any>(null);
   const [verificationCode, setVerificationCode] = useState<string[]>([
     "",
     "",
@@ -33,7 +35,7 @@ function VerifyPage({}: Props) {
       toast.error(
         "unable to fetch user information, redirecting back to signup!!"
       );
-      // router.push("/signup");
+      router.push("/signup");
     }
   };
 
@@ -42,6 +44,8 @@ function VerifyPage({}: Props) {
     const updatedVerificationCode = [...verificationCode];
     updatedVerificationCode[key] = value;
     setVerificationCode(updatedVerificationCode);
+    const inputs = formRef.current.getElementsByTagName("input");
+    inputs[key + 1]?.focus();
   };
 
   useEffect(() => {
@@ -64,7 +68,7 @@ function VerifyPage({}: Props) {
     try {
       const token = verificationCode.join("");
       console.log("code!!!", token);
-      const response = await axios.post("/api/verify/token", { email, token });
+      const response = await axios.post("/api/verify/user", { email, token });
       const { success } = response.data;
       if (!success) throw new Error("invalid token!!!");
       toast.success("User Verifies");
@@ -83,7 +87,7 @@ function VerifyPage({}: Props) {
           {email.length ? email.slice(0, 3) + "****" + email.split("@")[1] : ""}
         </span>
       </div>
-      <Form>
+      <Form ref={formRef}>
         <Form.Label htmlFor="code1">Code</Form.Label>
         <div className="form-control-wrap verification-code-wrap">
           <Form.Control

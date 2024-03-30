@@ -31,3 +31,24 @@ export async function GET(request: NextRequest, response: NextResponse) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
+
+export async function POST(request: NextRequest, response: NextResponse) {
+  try {
+    const reqBody = await request.json();
+    const { email, token } = reqBody;
+    if (_.isEmpty(email) || _.isEmpty(token))
+      throw new Error("email not found!!!");
+    const user = await User.findOne({ email, verifyToken: token }).then(
+      (user: any) => {
+        if (_.isEmpty(user)) throw new Error("user not found!!!");
+        return NextResponse.json({
+          success: true,
+          message: "User Verified",
+        });
+      }
+    );
+  } catch (err: any) {
+    console.error(err);
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
+}
