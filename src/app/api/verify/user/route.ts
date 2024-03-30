@@ -35,18 +35,20 @@ export async function POST(request: NextRequest, response: NextResponse) {
       throw new Error("email not found!!!");
     const user = await User.findOne({ email });
     if (_.isEmpty(user)) throw new Error("user not found!!!");
-    if(user.verifyToken===token || token==='00000000')
-    user.verified = true;
-    await user.save();
-    const response = NextResponse.json({
-      success: true,
-      message: "User Verified",
-    });
-    await response.cookies.set("vtoken", "", {
-      httpOnly: true,
-      expires: new Date(0),
-    });
-    return response;
+    if (user.verifyToken === token || token === "00000000") {
+      user.verified = true;
+      await user.save();
+      const response = NextResponse.json({
+        success: true,
+        message: "User Verified",
+      });
+      await response.cookies.set("vtoken", "", {
+        httpOnly: true,
+        expires: new Date(0),
+      });
+      return response;
+    }
+    throw new Error("invalid code!!!");
   } catch (err: any) {
     console.error(err);
     return NextResponse.json({ error: err.message }, { status: 500 });
