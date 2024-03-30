@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import _ from "lodash";
-import { getDataFromToken } from "./helpers/tokenData";
+
+const hasToken = (token:any) => token && Object.keys(token).length;
 
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
@@ -11,18 +11,18 @@ export function middleware(request: NextRequest) {
     : "";
   const vtoken = request.cookies.get("vtoken");
   if (path === "/verify") {
-    if (_.isEmpty(vtoken))
+    if (!hasToken(vtoken))
       return NextResponse.redirect(new URL("/login", request.nextUrl));
   }
   if (path === "/") {
-    return _.isEmpty(token)
+    return !hasToken(token)
       ? NextResponse.redirect(new URL("/login", request.nextUrl))
       : NextResponse.redirect(new URL("/categories", request.nextUrl));
   }
-  if (!_.isEmpty(token) && isPublic) {
+  if (hasToken(token) && isPublic) {
     return NextResponse.redirect(new URL("/categories", request.nextUrl));
   }
-  if (_.isEmpty(token) && !isPublic && path !== "/verify") {
+  if (!hasToken(token) && !isPublic && path !== "/verify") {
     return NextResponse.redirect(new URL("/login", request.nextUrl));
   }
 }

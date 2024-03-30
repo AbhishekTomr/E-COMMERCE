@@ -1,13 +1,13 @@
 import nodemailer from "nodemailer";
 import sendGridTransport from "nodemailer-sendgrid-transport";
 
-export const sendMail = async (email: string, verificationCode: any) => {
+export const sendMail = async (email, verificationCode) => {
   try {
     const transporter = nodemailer.createTransport(
       sendGridTransport({
         auth: {
           api_key:
-          process.env.SENDGRID_API_KEY!,
+          process.env.SENDGRID_API_KEY,
         },
       })
     );
