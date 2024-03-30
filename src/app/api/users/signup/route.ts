@@ -36,9 +36,8 @@ export async function POST(request: NextRequest, response: NextResponse) {
       varifyTokenExpiry: Date.now() + 3600000,
       selectedCategories: [],
     });
-    const createdUser = await newUser.save();
     await sendMail(email, verificationCode);
-
+    const createdUser = await newUser.save();
     const tokenData = {
       id: createdUser._id,
       username: createdUser.name,

