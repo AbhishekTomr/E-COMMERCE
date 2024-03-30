@@ -11,7 +11,6 @@ export async function POST(request: NextRequest, response: NextResponse) {
   try {
     const reqBody = await request.json();
     const { email, password } = reqBody;
-    console.log("password", password);
     const user = await User.findOne({ email });
     if (_.isEmpty(user)) {
       return NextResponse.json(
@@ -25,7 +24,6 @@ export async function POST(request: NextRequest, response: NextResponse) {
         { status: 400 }
       );
     const validPassword = await bcryptjs.compare(password, user.password);
-    console.log("valid password", validPassword);
     if (validPassword) {
       const tokenData = {
         id: user._id,

@@ -67,7 +67,6 @@ function VerifyPage({}: Props) {
     event.stopPropagation();
     try {
       const token = verificationCode.join("");
-      console.log("code!!!", token);
       const response = await axios.post("/api/verify/user", { email, token });
       const { success } = response.data;
       if (!success) throw new Error("invalid token!!!");

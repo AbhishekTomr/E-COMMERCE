@@ -85,10 +85,6 @@ const Categories = (props: Props) => {
     setUserInterests();
   }, [selectedInterest]);
 
-  useEffect(() => {
-    console.log("selected interests", selectedInterest);
-  }, [selectedInterest]);
-
   const isChecked = (interest: any) => {
     if (_.isEmpty(interest) || _.isEmpty(selectedInterest)) return false;
     const item = selectedInterest?.find((item: any) => {

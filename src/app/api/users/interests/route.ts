@@ -32,7 +32,6 @@ export async function POST(request: NextRequest, response: NextResponse) {
     const tokenId = getDataFromToken(request);
     const reqBody = await request.json();
     const { selectedCategories } = reqBody;
-    console.log("selected category", selectedCategories);
     if (_.isEmpty(tokenId)) {
       throw new Error("Unable to fetch user interests");
     }
@@ -41,7 +40,6 @@ export async function POST(request: NextRequest, response: NextResponse) {
       throw new Error("Unable to fetch user");
     }
     user.selectedCategories = selectedCategories;
-    console.log("hehe!!!", user);
     await user.save();
     return NextResponse.json({
       success: true,

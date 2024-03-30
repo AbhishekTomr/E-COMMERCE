@@ -86,10 +86,6 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("errors", error);
-  }, [error]);
-
   return (
     <Card className="sign-up-wrap">
       <h2 className="signUp-header">Login</h2>

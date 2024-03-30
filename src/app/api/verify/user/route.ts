@@ -10,7 +10,6 @@ connectDB();
 export async function GET(request: NextRequest, response: NextResponse) {
   try {
     const userId = getDataFromToken(request, "vtoken");
-    console.log("sending vtoken!!!");
     if (_.isEmpty(userId)) throw new Error("email not found!!!");
     const user = await User.findById(userId);
     if (_.isEmpty(user)) throw new Error("user not found!!!");

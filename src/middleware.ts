@@ -10,7 +10,6 @@ export function middleware(request: NextRequest) {
     ? request.cookies.get("token")?.value
     : "";
   const vtoken = request.cookies.get("vtoken");
-  console.log("check this out****** vtoken", vtoken);
   if (path === "/verify") {
     if (_.isEmpty(vtoken))
       return NextResponse.redirect(new URL("/login", request.nextUrl));
